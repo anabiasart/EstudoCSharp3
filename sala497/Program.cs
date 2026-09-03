@@ -23,6 +23,9 @@ int segundaMaior=int.MinValue;
 int indicePrincipal=-1;
 int indiceSecundario=-1;
 
+int[] pessoaMencionada = new int[5];
+bool[] afirmouEstarNoLocal = new bool[5];
+
 
         for(int i = 0; i < 5; i++)
         {
@@ -92,18 +95,73 @@ int indiceSecundario=-1;
                 indiceSecundario = i;
             }
         }
-        Console.WriteLine("===== PERFIL INVESTIGATIVO =====");
+       Console.WriteLine();
+Console.WriteLine("===== DEPOIMENTO CRUZADO =====");
 
-        Console.WriteLine("Suspeito principal:");
-        Console.WriteLine(nomes[indicePrincipal]);
+Console.WriteLine(
+    nomes[indicePrincipal] +
+    " é atualmente o principal suspeito."
+);
 
-        Console.WriteLine("Pontuação: " + maiorSuspeita);
+Console.WriteLine();
+Console.WriteLine("Quem " + nomes[indicePrincipal] + " mencionou?");
 
-        Console.WriteLine();
+for (int i = 0; i < nomes.Length; i++)
+{
+    Console.WriteLine(
+        "[" + (i + 1) + "] " + nomes[i]
+    );
+}
 
-        Console.WriteLine("Segundo suspeito:");
-        Console.WriteLine(nomes[indiceSecundario]);
+int escolha = int.Parse(Console.ReadLine());
 
-        Console.WriteLine("Pontuação: " + segundaMaior);
-        }
+if (escolha < 1 || escolha > 5)
+{
+    Console.WriteLine("Suspeito inválido.");
+    return;
+}
+
+// transforma 1-5 em índice 0-4
+pessoaMencionada[indicePrincipal] = escolha - 1;
+
+int acusado = pessoaMencionada[indicePrincipal];
+
+Console.WriteLine(
+    nomes[indicePrincipal] +
+    " afirmou que " +
+    nomes[acusado] +
+    " estava no local? (true/false)"
+);
+
+afirmouEstarNoLocal[indicePrincipal] =
+    bool.Parse(Console.ReadLine());
+
+if (afirmouEstarNoLocal[indicePrincipal] !=
+    esteveNoLocal[acusado])
+{
+    Console.WriteLine();
+    Console.WriteLine("!!! CONTRADIÇÃO DETECTADA !!!");
+
+    Console.WriteLine(
+        nomes[indicePrincipal] +
+        " fez uma afirmação incompatível sobre " +
+        nomes[acusado] + "."
+    );
+
+    suspeitas[indicePrincipal] += 2;
+
+    Console.WriteLine(
+        "Suspeita de " +
+        nomes[indicePrincipal] +
+        " aumentou para " +
+        suspeitas[indicePrincipal]
+    );
+}
+else
+{
+    Console.WriteLine();
+    Console.WriteLine("O depoimento é compatível com os dados conhecidos.");
+}
+
+    }
     }
