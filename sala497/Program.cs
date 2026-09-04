@@ -121,10 +121,17 @@ if (escolha < 1 || escolha > 5)
     return;
 }
 
-// transforma 1-5 em índice 0-4
 pessoaMencionada[indicePrincipal] = escolha - 1;
 
 int acusado = pessoaMencionada[indicePrincipal];
+
+if (acusado == indicePrincipal)
+{
+    Console.WriteLine("O suspeito não pode mencionar ele mesmo.");
+    return;
+}
+// transforma 1-5 em índice 0-4
+
 
 Console.WriteLine(
     nomes[indicePrincipal] +
